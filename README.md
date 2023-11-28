@@ -6,6 +6,12 @@ Go to /docs to see docs and endpoints.
 
 - pip install -r requirements.txt
 
+- pip install fastapi
+
+- pip install "uvicorn[standard]"
+
+- pip install sqlalchemy
+
 Execute to run:
 
 - uvicorn main:app --reload
