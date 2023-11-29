@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI, Depends, status, HTTPException
-import models
-from routes import router
-from config import engine
+import app.models
+from app.routes import router
+from app.config import engine
 
-models.Base.metadata.create_all(bind=engine)
+app.models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

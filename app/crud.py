@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models import Item
-from schemas import ItemSchema
+from .models import Item
+from .schemas import ItemSchema
 
 def get_item(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Item).offset(skip).limit(limit).all()
