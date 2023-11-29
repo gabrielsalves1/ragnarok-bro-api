@@ -9,10 +9,10 @@ def get_item_by_id(db: Session, item_id: int):
     return db.query(Item).filter(Item.id == item_id).first()
 
 def create_item(db: Session, item: ItemSchema):
-    _item = Item(**item.model_dump())
+    db_item = Item(**item.model_dump())
 
-    db.add(_item)
+    db.add(db_item)
     db.commit()
-    db.refresh(_item)
+    db.refresh(db_item)
 
-    return _item
+    return db_item

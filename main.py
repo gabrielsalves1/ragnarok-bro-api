@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, Depends, status, HTTPException
+from fastapi import FastAPI
 import app.models
 from app.routes import router
 from app.config import engine
