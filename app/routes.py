@@ -29,6 +29,9 @@ async def get_item_by_id_service(item_id: int, db: Session = Depends(get_db)):
 
 @router.post("/items", status_code=201)
 async def create_item_service(item: ItemSchema, db: Session = Depends(get_db)):
-    db_item = crud.create_item(db=db, item=item)
+    try:
+        db_item = crud.create_item(db=db, item=item)
+    except:
+        raise HTTPException(status_code=409, detail="Conflict, item already exists")
 
     return Response(status="Created", code="201", message="Item created", result=db_item).dict(exclude_none=True)

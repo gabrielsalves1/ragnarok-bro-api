@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
 from typing import Optional, Generic, TypeVar
+from pydantic import BaseModel, Field
 from pydantic.generics import GenericModel
 
 T = TypeVar('T')
@@ -7,6 +7,7 @@ T = TypeVar('T')
 class ItemSchema(BaseModel):
     id: int
     name: str
+    img_url: str
     description: str
     weight: float
     price: int
