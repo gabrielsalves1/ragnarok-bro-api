@@ -6,10 +6,10 @@ class Item(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
+    img_url = Column(String)
     description = Column(String)
     weight = Column(Float)
     price = Column(Integer)
-    duration = Column(Integer)
     thrown_on_the_floor = Column(Boolean, default=False)
     negotiated = Column(Boolean, default=False)
     placed_in_the_warehouse = Column(Boolean, default=False)

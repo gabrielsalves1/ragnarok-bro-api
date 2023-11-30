@@ -10,7 +10,6 @@ class ItemSchema(BaseModel):
     description: str
     weight: float
     price: int
-    duration: int
     thrown_on_the_floor: bool
     negotiated: bool
     placed_in_the_warehouse: bool
