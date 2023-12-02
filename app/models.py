@@ -4,7 +4,7 @@ from .config import Base
 class Item(Base):
     __tablename__ = "items"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     name = Column(String)
     img_url = Column(String)
     description = Column(String)

@@ -5,7 +5,7 @@ from pydantic.generics import GenericModel
 T = TypeVar('T')
 
 class ItemSchema(BaseModel):
-    id: int
+    id: str
     name: str
     img_url: str
     description: str
@@ -19,8 +19,8 @@ class ItemSchema(BaseModel):
     placed_in_the_guild_warehouse: bool
 
     class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
+        from_attributes = True
+        populate_by_name = True
 
 class Request(GenericModel, Generic[T]):
     parameter: Optional[T] = Field(...)
