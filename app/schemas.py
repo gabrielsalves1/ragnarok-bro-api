@@ -1,6 +1,5 @@
 from typing import Optional, Generic, TypeVar
 from pydantic import BaseModel, Field
-from pydantic.generics import GenericModel
 
 T = TypeVar('T')
 
@@ -22,13 +21,13 @@ class ItemSchema(BaseModel):
         from_attributes = True
         populate_by_name = True
 
-class Request(GenericModel, Generic[T]):
+class Request(BaseModel, Generic[T]):
     parameter: Optional[T] = Field(...)
 
 class RequestItem(BaseModel):
     parameter: ItemSchema = Field(...)
 
-class Response(GenericModel, Generic[T]):
+class Response(BaseModel, Generic[T]):
     code: str
     status: str
     message: str
