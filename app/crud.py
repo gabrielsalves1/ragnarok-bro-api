@@ -1,9 +1,9 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from .models import Item
-from .schemas import ItemSchema
+from .models import Item, Monster
+from .schemas import ItemSchema, MonsterSchema
 
-def get_item(db: Session, skip: int = 0, limit: int = 100):
+def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Item).offset(skip).limit(limit).all()
 
 def get_item_by_id(db: Session, item_id: int):
@@ -40,3 +40,37 @@ def update_item(item_id: str, db: Session, item: ItemSchema):
     db.close()
 
     return db_item
+
+def get_monsters(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(Monster).offset(skip).limit(limit).all()
+
+def get_monster_by_id(db: Session, monster_id: int):
+    db_monster = db.query(Monster).filter(Monster.id == monster_id).first()
+    if db_monster is None:
+        raise HTTPException(status_code=404, detail="Monster not found")
+
+    return db_monster
+
+def create_monster(db: Session, monster: MonsterSchema):
+    db_monster = Monster(**monster.model_dump())
+
+    try:
+        db.add(db_monster)
+        db.commit()
+        db.refresh(db_monster)
+    except:
+        raise HTTPException(status_code=409, detail="Monster already exists")
+
+    return db_monster
+
+def update_monster(monster_id: str, db: Session, monster: MonsterSchema):
+    db_monster = db.query(Monster).filter(Monster.id == monster_id).first()
+    if db_monster is None:
+        raise HTTPException(status_code=404, detail="Monster not found")
+
+    db.query(Monster).filter(Monster.id == monster_id).update({})
+    db.commit()
+    db.refresh(db_monster)
+    db.close()
+
+    return db_monster
