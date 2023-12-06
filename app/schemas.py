@@ -1,4 +1,4 @@
-from typing import Optional, Generic, TypeVar
+from typing import Optional, Generic, TypeVar, List
 from pydantic import BaseModel, Field
 
 T = TypeVar('T')
@@ -16,6 +16,8 @@ class ItemSchema(BaseModel):
     stored_in_cart: bool
     sold_to_npc: bool
     placed_in_the_guild_warehouse: bool
+    drop_from_monster_id: Optional[List[str]] = None
+    obtained_from_id: Optional[List[str]] = None
 
     class Config:
         from_attributes = True

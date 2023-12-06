@@ -2,13 +2,12 @@ import uvicorn
 from fastapi import FastAPI
 from dotenv import load_dotenv
 import os
-import app.models
-from app.routes import router
-from app.config import engine
+import models
+from routes import router
+from config import engine
 
 load_dotenv()
 
-app.models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 app.include_router(router)
 

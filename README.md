@@ -4,15 +4,23 @@ Go to /docs to see docs and endpoints.
 
 # SETUP
 
+Docker container:
+
+- docker-compose up -d
+
+Linux:
+
+- sudo apt install python3-dev libpq-dev
+
+Pip commands:
+
 - pip install -r requirements.txt
 
-- pip install fastapi
+# Execute to run:
 
-- pip install "uvicorn[standard]"
+- python3 main.py
 
-- pip install sqlalchemy
-
-Execute to run:
+or
 
 - uvicorn main:app --reload
 

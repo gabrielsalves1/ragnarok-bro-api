@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from .config import SessionLocal
-from .schemas import ItemSchema, MonsterSchema, Response
-from . import crud
+from config import SessionLocal
+from schemas import ItemSchema, MonsterSchema, Response
+import crud
 
 router = APIRouter()
 
@@ -36,7 +36,6 @@ async def update_item(item_id: str, item: ItemSchema, db: Session = Depends(get_
     db_item = crud.update_item(db=db, item=item, item_id=item_id)
 
     return Response(status="Updated", code="200", message="Item updated", result=db_item).model_dump(exclude_none=True)
-
 
 @router.get("/monsters", status_code=200)
 async def get_monsters_service(db: Session = Depends(get_db)):

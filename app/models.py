@@ -1,5 +1,5 @@
-from sqlalchemy import Boolean, Column, Integer, String, Float
-from .config import Base
+from sqlalchemy import Boolean, Column, Integer, String, Float, ARRAY
+from config import Base
 
 class Item(Base):
     __tablename__ = "items"
@@ -16,6 +16,8 @@ class Item(Base):
     stored_in_cart = Column(Boolean, default=False)
     sold_to_npc = Column(Boolean, default=False)
     placed_in_the_guild_warehouse = Column(Boolean, default=False)
+    drop_from_monster_id = Column(ARRAY(String))
+    obtained_from_id = Column(ARRAY(String))
 
 class Monster(Base):
     __tablename__ = "monsters"
