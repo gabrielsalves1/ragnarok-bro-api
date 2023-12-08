@@ -1,5 +1,15 @@
 version: '3.7'
 services:
+  app:
+    build: .
+    container_name: app
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    stdin_open: true
+    tty: true
+
   postgresql:
     image: postgres
     container_name: postgresql
