@@ -24,6 +24,7 @@ class Monster(Base):
 
     id = Column(String, primary_key=True, index=True)
     name = Column(String)
+    img_url = Column(String)
     level = Column(Integer)
     race = Column(String)
     monster_property = Column(String)
@@ -58,6 +59,42 @@ class Monster(Base):
 
 class Weapon(Base):
     __tablename__ = "weapons"
+
+    id = Column(String, primary_key=True, index=True)
+    name = Column(String)
+    img_url = Column(String)
+    description = Column(String)
+    weight = Column(Float)
+    price = Column(Integer)
+    thrown_on_the_floor = Column(Boolean, default=False)
+    negotiated = Column(Boolean, default=False)
+    placed_in_the_warehouse = Column(Boolean, default=False)
+    stored_in_cart = Column(Boolean, default=False)
+    sold_to_npc = Column(Boolean, default=False)
+    placed_in_the_guild_warehouse = Column(Boolean, default=False)
+    drop_from_monster_id = Column(ARRAY(String))
+    obtained_from_id = Column(ARRAY(String))
+
+class Equipment(Base):
+    __tablename__ = "equipments"
+
+    id = Column(String, primary_key=True, index=True)
+    name = Column(String)
+    img_url = Column(String)
+    description = Column(String)
+    weight = Column(Float)
+    price = Column(Integer)
+    thrown_on_the_floor = Column(Boolean, default=False)
+    negotiated = Column(Boolean, default=False)
+    placed_in_the_warehouse = Column(Boolean, default=False)
+    stored_in_cart = Column(Boolean, default=False)
+    sold_to_npc = Column(Boolean, default=False)
+    placed_in_the_guild_warehouse = Column(Boolean, default=False)
+    drop_from_monster_id = Column(ARRAY(String))
+    obtained_from_id = Column(ARRAY(String))
+
+class Slot(Base):
+    __tablename__ = "slots"
 
     id = Column(String, primary_key=True, index=True)
     name = Column(String)

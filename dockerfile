@@ -13,4 +13,3 @@ RUN apt-get update -y && \
     poetry install
 
 EXPOSE 8000
-CMD [ "poetry", "run", "python3", "-u", "./app/main.py" ]

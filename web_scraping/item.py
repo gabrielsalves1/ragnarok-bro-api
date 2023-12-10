@@ -44,7 +44,10 @@ class Item:
 
         self.driver.get(url)
 
-        WebDriverWait(self.driver, 120).until(ec.presence_of_element_located((By.XPATH, '//h1[@class="underlined"]')))
+        try:
+            WebDriverWait(self.driver, 60).until(ec.presence_of_element_located((By.XPATH, '//h1[@class="underlined"]')))
+        except:
+            return
 
         data['id'] = str(re.search(r'/detalhes/(\w+)', url).group(1))
         data['name'] = self.driver.find_element(By.XPATH, '//div[@id="itemDescription"]//div//h1').text

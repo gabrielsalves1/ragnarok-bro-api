@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from models import Item, Monster, Weapon
-from schemas import ItemSchema, MonsterSchema, WeaponSchema
+from models import Item, Monster, Weapon, Equipment, Slot
+from schemas import ItemSchema, MonsterSchema, WeaponSchema, EquipmentSchema, SlotSchema
 
 # Items
 def get_items(db: Session, skip: int = 0, limit: int = 100):
@@ -71,7 +71,7 @@ def update_monster(monster_id: str, db: Session, monster: MonsterSchema):
     if db_monster is None:
         raise HTTPException(status_code=404, detail="Monster not found")
 
-    db.query(Monster).filter(Monster.id == monster_id).update({Monster.id: monster.id, Monster.level: monster.level, Monster.race: monster.race,
+    db.query(Monster).filter(Monster.id == monster_id).update({Monster.id: monster.id, Monster.name: monster.name, Monster.img_url: monster.img_url, Monster.level: monster.level, Monster.race: monster.race,
                                                             Monster.monster_property: monster.monster_property, Monster.size: monster.size,
                                                             Monster.base_exp: monster.base_exp, Monster.class_exp: monster.class_exp,
                                                             Monster.resistence_neutral: monster.resistence_neutral, Monster.resistence_earth: monster.resistence_earth,
@@ -131,3 +131,83 @@ def update_weapon(weapon_id: str, db: Session, weapon: Weapon):
     db.close()
 
     return db_weapon
+
+# Equipments
+def get_equipments(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(Equipment).offset(skip).limit(limit).all()
+
+def get_equipment_by_id(db: Session, equipment_id: int):
+    db_equipment = db.query(Equipment).filter(Equipment.id == equipment_id).first()
+    if db_equipment is None:
+        raise HTTPException(status_code=404, detail="Equipment not found")
+
+    return db_equipment
+
+def create_equipment(db: Session, equipment: EquipmentSchema):
+    db_equipment = Equipment(**equipment.model_dump())
+
+    try:
+        db.add(db_equipment)
+        db.commit()
+        db.refresh(db_equipment)
+    except:
+        raise HTTPException(status_code=409, detail="Equipment already exists")
+
+    return db_equipment
+
+def update_equipment(equipment_id: str, db: Session, equipment: EquipmentSchema):
+    db_equipment = db.query(Equipment).filter(Equipment.id == equipment_id).first()
+    if db_equipment is None:
+        raise HTTPException(status_code=404, detail="Equipment not found")
+
+    db.query(Equipment).filter(Equipment.id == equipment_id).update({Equipment.id: equipment.id, Equipment.name: equipment.name, Equipment.img_url: equipment.img_url, Equipment.description: equipment.description,
+                                                    Equipment.weight: equipment.weight, Equipment.description: equipment.description, Equipment.price: equipment.price,
+                                                    Equipment.thrown_on_the_floor: equipment.thrown_on_the_floor, Equipment.negotiated: equipment.negotiated,
+                                                    Equipment.placed_in_the_warehouse: equipment.placed_in_the_warehouse, Equipment.stored_in_cart: equipment.stored_in_cart,
+                                                    Equipment.sold_to_npc: equipment.sold_to_npc, Equipment.placed_in_the_guild_warehouse: equipment.placed_in_the_guild_warehouse,
+                                                    Equipment.drop_from_monster_id: equipment.drop_from_monster_id, Equipment.obtained_from_id: equipment.obtained_from_id})
+    db.commit()
+    db.refresh(db_equipment)
+    db.close()
+
+    return db_equipment
+
+# Slots
+def get_slots(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(Slot).offset(skip).limit(limit).all()
+
+def get_slot_by_id(db: Session, slot_id: int):
+    db_slot = db.query(Slot).filter(Slot.id == slot_id).first()
+    if db_slot is None:
+        raise HTTPException(status_code=404, detail="Slot not found")
+
+    return db_slot
+
+def create_slot(db: Session, slot: SlotSchema):
+    db_slot = Slot(**slot.model_dump())
+
+    try:
+        db.add(db_slot)
+        db.commit()
+        db.refresh(db_slot)
+    except:
+        raise HTTPException(status_code=409, detail="Slot already exists")
+
+    return db_slot
+
+def update_slot(slot_id: str, db: Session, slot: SlotSchema):
+    db_slot = db.query(Slot).filter(Slot.id == slot_id).first()
+    if db_slot is None:
+        raise HTTPException(status_code=404, detail="Slot not found")
+
+    db.query(Slot).filter(Slot.id == slot_id).update({Slot.id: slot.id, Slot.name: slot.name, Slot.img_url: slot.img_url, Slot.description: slot.description,
+                                                    Slot.weight: slot.weight, Slot.description: slot.description, Slot.price: slot.price,
+                                                    Slot.thrown_on_the_floor: slot.thrown_on_the_floor, Slot.negotiated: slot.negotiated,
+                                                    Slot.placed_in_the_warehouse: slot.placed_in_the_warehouse, Slot.stored_in_cart: slot.stored_in_cart,
+                                                    Slot.sold_to_npc: slot.sold_to_npc, Slot.placed_in_the_guild_warehouse: slot.placed_in_the_guild_warehouse,
+                                                    Slot.drop_from_monster_id: slot.drop_from_monster_id, Slot.obtained_from_id: slot.obtained_from_id})
+    db.commit()
+    db.refresh(db_slot)
+    db.close()
+
+    return db_slot

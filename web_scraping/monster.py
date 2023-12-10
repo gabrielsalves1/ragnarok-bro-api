@@ -44,7 +44,10 @@ class Monster:
 
         self.driver.get(url)
 
-        WebDriverWait(self.driver, 120).until(ec.presence_of_element_located((By.XPATH, '//h1[@class="underlined"]')))
+        try:
+            WebDriverWait(self.driver, 60).until(ec.presence_of_element_located((By.XPATH, '//h1[@class="underlined"]')))
+        except:
+            return
 
         data['id'] = str(re.search(r'/detalhes/(\w+)', url).group(1))
         data['name'] = self.driver.find_element(By.XPATH, '//div[@id="itemDescription"]//div//h1').text
@@ -109,4 +112,3 @@ class Monster:
             response = requests.put(f"http://{os.environ['APP_URL']}:{int(os.environ['APP_PORT'])}/monsters/{data['id']}", data=json.dumps(data))
 
         print(response)
-

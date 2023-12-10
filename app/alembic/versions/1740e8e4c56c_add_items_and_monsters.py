@@ -1,4 +1,4 @@
-"""Items and monsters
+"""Add items and monsters
 
 Revision ID: 1740e8e4c56c
 Revises: 

@@ -1,4 +1,4 @@
-"""Weapons
+"""Add weapons
 
 Revision ID: 07b518539437
 Revises: 2d9097bc6c53

@@ -9,15 +9,15 @@ import requests
 import json
 import time
 
-class Weapon:
+class Equipment:
     def __init__(self, driver):
         load_dotenv()
         self.driver = driver
 
-    def scraping_weapons(self):
-        self.driver.get(f"{os.environ['RAGNAROK_URL']}/database/thor/armamentos?page=1")
+    def scraping_equipments(self):
+        self.driver.get(f"{os.environ['RAGNAROK_URL']}/database/thor/equipamentos?page=1")
 
-        WebDriverWait(self.driver, 120).until(ec.presence_of_element_located((By.XPATH, '//h1[text()="Armamentos"]')))
+        WebDriverWait(self.driver, 120).until(ec.presence_of_element_located((By.XPATH, '//h1[text()="Equipamentos"]')))
 
         time.sleep(5)
         try:
@@ -28,16 +28,16 @@ class Weapon:
         last_page = int(re.search(r"setParam\('page', (\d+)\)", self.driver.find_element(By.XPATH, '//label[@class="box bluebox"]').get_attribute('onclick')).group(1))
 
         for actual_page in range(2, last_page + 1):
-            weapons = self.driver.find_elements(By.XPATH, '//li[@class="armamentos show"]//a')
+            items = self.driver.find_elements(By.XPATH, '//li[@class="equipamentos show"]//a')
 
-            for weapon in weapons:
-                weapon_url = weapon.get_attribute('href')
+            for item in items:
+                item_url = item.get_attribute('href')
 
-                self.scraping_and_post(url = weapon_url)
+                self.scraping_and_post(url = item_url)
 
                 self.driver.back()
 
-            self.driver.get(f"{os.environ['RAGNAROK_URL']}/database/thor/armamentos?page={actual_page}")
+            self.driver.get(f"{os.environ['RAGNAROK_URL']}/database/thor/equipamentos?page={actual_page}")
 
     def scraping_and_post(self, url):
         data = {}
@@ -106,9 +106,9 @@ class Weapon:
             obtained_from_id.append(str(re.search(r'/detalhes/(\w+)', obtained.get_attribute('href')).group(1)))
         data['obtained_from_id'] = obtained_from_id
 
-        response = requests.post(f"http://{os.environ['APP_URL']}:{int(os.environ['APP_PORT'])}/weapons", data=json.dumps(data))
+        response = requests.post(f"http://{os.environ['APP_URL']}:{int(os.environ['APP_PORT'])}/equipments", data=json.dumps(data))
 
         if response.status_code == 409:
-            response = requests.put(f"http://{os.environ['APP_URL']}:{int(os.environ['APP_PORT'])}/weapons/{data['id']}", data=json.dumps(data))
+            response = requests.put(f"http://{os.environ['APP_URL']}:{int(os.environ['APP_PORT'])}/equipments/{data['id']}", data=json.dumps(data))
 
         print(response)

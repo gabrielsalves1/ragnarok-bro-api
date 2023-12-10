@@ -1,18 +1,32 @@
 # DOCS
 
-Go to /docs to see docs and endpoints.
+Go to /docs to see documentation.
 
 # SETUP
 
-Docker container:
+## Dependencies
+
+Chrome + ChromeDriver
+Python 3.10
+Docker
+
+## Running in a docker container
 
 - docker-compose up -d
 
-Linux:
+## Running local
 
-- sudo apt install python3-dev libpq-dev
+1. Clone project
 
-Pip commands:
+- git clone git@github.com:gabrielsalves1/ragnarok-bro-api.git
+
+2. Install dependencies
+
+apt:
+
+- sudo apt install python3-dev libpq-dev gcc
+
+pip and poetry commands:
 
 - pip install poetry
 
@@ -20,14 +34,16 @@ Pip commands:
 
 - poetry install
 
-# Execute to run:
+3. Run migrations
 
-- python3 main.py
+- cd app
 
-or
+- alembic upgrade head
 
-- uvicorn main:app --reload
+# Execute app
 
-or
+- python3 app/main.py
 
-- python3 -m uvicorn main:app --reload
+# Execute scraping
+
+- python3 web_scraping/main.py
