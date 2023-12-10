@@ -25,6 +25,7 @@ class ItemSchema(BaseModel):
 
 class MonsterSchema(BaseModel):
     id: str
+    name: str
     level: int
     race: str
     monster_property: str
@@ -55,6 +56,27 @@ class MonsterSchema(BaseModel):
     attribute_int: int
     attribute_des: int
     attribute_sor: int
+    drop_items_id: Optional[List[str]] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+class WeaponSchema(BaseModel):
+    id: str
+    name: str
+    img_url: str
+    description: str
+    weight: float
+    price: int
+    thrown_on_the_floor: bool
+    negotiated: bool
+    placed_in_the_warehouse: bool
+    stored_in_cart: bool
+    sold_to_npc: bool
+    placed_in_the_guild_warehouse: bool
+    drop_from_monster_id: Optional[List[str]] = None
+    obtained_from_id: Optional[List[str]] = None
 
     class Config:
         from_attributes = True

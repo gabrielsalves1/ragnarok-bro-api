@@ -14,7 +14,11 @@ Linux:
 
 Pip commands:
 
-- pip install -r requirements.txt
+- pip install poetry
+
+- poetry shell
+
+- poetry install
 
 # Execute to run:
 

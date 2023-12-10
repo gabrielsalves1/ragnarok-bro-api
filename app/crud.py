@@ -1,8 +1,9 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from models import Item, Monster
-from schemas import ItemSchema, MonsterSchema
+from models import Item, Monster, Weapon
+from schemas import ItemSchema, MonsterSchema, WeaponSchema
 
+# Items
 def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Item).offset(skip).limit(limit).all()
 
@@ -42,6 +43,7 @@ def update_item(item_id: str, db: Session, item: ItemSchema):
 
     return db_item
 
+# Monsters
 def get_monsters(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Monster).offset(skip).limit(limit).all()
 
@@ -89,3 +91,43 @@ def update_monster(monster_id: str, db: Session, monster: MonsterSchema):
     db.close()
 
     return db_monster
+
+# Weapons
+def get_weapons(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(Weapon).offset(skip).limit(limit).all()
+
+def get_weapon_by_id(db: Session, weapon_id: int):
+    db_weapon = db.query(Weapon).filter(Weapon.id == weapon_id).first()
+    if db_weapon is None:
+        raise HTTPException(status_code=404, detail="Weapon not found")
+
+    return db_weapon
+
+def create_weapon(db: Session, weapon: WeaponSchema):
+    db_weapon = Weapon(**weapon.model_dump())
+
+    try:
+        db.add(db_weapon)
+        db.commit()
+        db.refresh(db_weapon)
+    except:
+        raise HTTPException(status_code=409, detail="Weapon already exists")
+
+    return db_weapon
+
+def update_weapon(weapon_id: str, db: Session, weapon: Weapon):
+    db_weapon = db.query(Weapon).filter(Weapon.id == weapon_id).first()
+    if db_weapon is None:
+        raise HTTPException(status_code=404, detail="Weapon not found")
+
+    db.query(Weapon).filter(Weapon.id == weapon_id).update({Weapon.id: weapon.id, Weapon.name: weapon.name, Weapon.img_url: weapon.img_url, Weapon.description: weapon.description,
+                                                    Weapon.weight: weapon.weight, Weapon.description: weapon.description, Weapon.price: weapon.price,
+                                                    Weapon.thrown_on_the_floor: weapon.thrown_on_the_floor, Weapon.negotiated: weapon.negotiated,
+                                                    Weapon.placed_in_the_warehouse: weapon.placed_in_the_warehouse, Weapon.stored_in_cart: weapon.stored_in_cart,
+                                                    Weapon.sold_to_npc: weapon.sold_to_npc, Weapon.placed_in_the_guild_warehouse: weapon.placed_in_the_guild_warehouse,
+                                                    Weapon.drop_from_monster_id: weapon.drop_from_monster_id, Weapon.obtained_from_id: weapon.obtained_from_id})
+    db.commit()
+    db.refresh(db_weapon)
+    db.close()
+
+    return db_weapon

@@ -2,11 +2,14 @@ version: '3.7'
 services:
   app:
     build: .
+    command: alembic upgrade head
     container_name: app
     volumes:
       - .:/app
     ports:
       - 8000:8000
+    depends_on:
+      - postgresql
     stdin_open: true
     tty: true
 
