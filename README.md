@@ -8,9 +8,9 @@ Go to /docs to see documentation.
 
 ## DEPENDENCIES
 
-Chrome + ChromeDriver
-Python 3.10
-Docker
+- Chrome + ChromeDriver
+- Python 3.10
+- Docker
 
 ## RUNNING IN A DOCKER CONTAINER
 
