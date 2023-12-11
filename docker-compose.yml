@@ -24,6 +24,28 @@ services:
     volumes:
       - local_pgdata:/var/lib/postgresql/data
 
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
+    depends_on:
+      - app
+      - postgresql
+
+  web_scraping:
+    build: .
+    container_name: web_scraping
+    command: "poetry run python3 web_scraping/main.py"
+    environment:
+      - APP_URL=app
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - app
+      - postgresql
+      - selenium
+    restart: always
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4
@@ -31,8 +53,8 @@ services:
     ports:
       - "8888:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
-      PGADMIN_DEFAULT_PASSWORD: strong-password
+      PGADMIN_DEFAULT_EMAIL: admin@ragnarok.com
+      PGADMIN_DEFAULT_PASSWORD: 123@password
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 

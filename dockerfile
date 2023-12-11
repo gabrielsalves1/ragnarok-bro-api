@@ -11,5 +11,3 @@ RUN apt-get update -y && \
     pip install --upgrade pip && \
     pip install poetry && \
     poetry install
-
-EXPOSE 8000

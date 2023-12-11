@@ -1,20 +1,24 @@
+![alt text](./img/logo_ragnarok.png)
+
 # DOCS
 
 Go to /docs to see documentation.
 
 # SETUP
 
-## Dependencies
+## DEPENDENCIES
 
 Chrome + ChromeDriver
 Python 3.10
 Docker
 
-## Running in a docker container
+## RUNNING IN A DOCKER CONTAINER
+
+This will start a container with app, postgres, pgadmin, selenium and a web scraping to populate database with informations in https://playragnarokonlinebr.com/database/thor. The web scraping will consult page a page and get data to send a request to app.
 
 - docker-compose up -d
 
-## Running local
+## RUNNING LOCAL
 
 1. Clone project
 
@@ -38,12 +42,16 @@ pip and poetry commands:
 
 - cd app
 
-- alembic upgrade head
+- poetry run alembic upgrade head
 
-# Execute app
+## EXECUTE APP
 
-- python3 app/main.py
+You will need a instance of postgres running.
 
-# Execute scraping
+- poetry run python3 app/main.py
 
-- python3 web_scraping/main.py
+## EXECUTE WEB SCRAPING
+
+The web scraping will consult page a page and get data to send a request to app.
+
+- poetry run python3 web_scraping/main.py

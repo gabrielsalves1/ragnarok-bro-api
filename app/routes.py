@@ -13,6 +13,10 @@ def get_db():
     finally:
         db.close()
 
+@router.get("/", status_code=200)
+async def home():
+    return Response(status="Ok", code="200", message="Ragnarok BRO API - Database https://playragnarokonlinebr.com/database").model_dump(exclude_none=True)
+
 # Items
 @router.get("/items", status_code=200)
 async def get_items_service(db: Session = Depends(get_db)):
