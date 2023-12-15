@@ -1,5 +1,3 @@
-![alt text](./img/logo_ragnarok.png)
-
 # DOCS
 
 Go to /docs to see documentation.
@@ -55,3 +53,7 @@ You will need a instance of postgres running.
 The web scraping will consult page a page and get data to send a request to app.
 
 - poetry run python3 web_scraping/main.py
+
+# RUNNING TESTS
+
+- poetry run pytest app/tests/.

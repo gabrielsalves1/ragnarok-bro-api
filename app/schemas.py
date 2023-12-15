@@ -123,12 +123,6 @@ class SlotSchema(BaseModel):
         from_attributes = True
         populate_by_name = True
 
-class Request(BaseModel, Generic[T]):
-    parameter: Optional[T] = Field(...)
-
-class RequestItem(BaseModel):
-    parameter: ItemSchema = Field(...)
-
 class Response(BaseModel, Generic[T]):
     code: str
     status: str

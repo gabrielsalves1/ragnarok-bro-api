@@ -24,6 +24,16 @@ services:
     volumes:
       - local_pgdata:/var/lib/postgresql/data
 
+  test_postgresql:
+    image: postgres
+    container_name: test_postgresql
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=test-ragnarok-bro-api
+
   selenium:
     image: selenium/standalone-chrome
     ports:

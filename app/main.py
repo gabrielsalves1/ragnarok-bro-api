@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from dotenv import load_dotenv
 import os
-from routes import router
+from app.routes import router
 
 load_dotenv()
 
